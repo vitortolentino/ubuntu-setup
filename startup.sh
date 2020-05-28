@@ -1,63 +1,63 @@
 clear
 yellow=`tput setaf 11`
-reset=`tput sgr0`
+resetColor=`tput sgr0`
 
 echo "${yellow}Initializing instalations"
-echo "updating packages${reset}"
+echo "updating packages${resetColor}"
 sudo apt-get update
 clear
 
-echo "${yellow}Installing curl${reset}"
+echo "${yellow}Installing curl${resetColor}"
 sudo apt install curl -y
 clear
 
-echo "${yellow}Installing zsh${reset}"
+echo "${yellow}Installing zsh${resetColor}"
 sudo apt-get install zsh -y
 
-echo "${yellow}Installing Oh My Zsh${reset}"
+echo "${yellow}Installing Oh My Zsh${resetColor}"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 clear
 
-echo "${yellow}Installing git${reset}"
+echo "${yellow}Installing git${resetColor}"
 sudo apt install git -y
 clear
 
-echo "${yellow}What name do you want to use in GIT user.name?${reset}"
+echo "${yellow}What name do you want to use in GIT user.name?${resetColor}"
 read git_config_user_name
 git config --global user.name "$git_config_user_name"
 clear 
 
-echo "${yellow}What email do you want to use in GIT user.email?${reset}"
+echo "${yellow}What email do you want to use in GIT user.email?${resetColor}"
 read git_config_user_email
 git config --global user.email $git_config_user_email
 clear
 
-echo "${yellow}Installing vim${reset}"
+echo "${yellow}Installing vim${resetColor}"
 sudo apt install vim -y
 clear
 
-echo "${yellow}Setting VIM as core editor${reset}"
+echo "${yellow}Setting VIM as core editor${resetColor}"
 git config --global core.editor vim
 clear
 
-echo "${yellow}Installing tool to handle clipboard via CLI${reset}"
+echo "${yellow}Installing tool to handle clipboard via CLI${resetColor}"
 sudo apt-get install xclip -y
 clear
 
-echo "${yellow}Generating a SSH Key${reset}"
+echo "${yellow}Generating a SSH Key${resetColor}"
 (cd ~/.ssh && ssh-keygen -t rsa -b 4096 -C $git_config_user_email)
 clear
 
-echo "${yellow}What name of genereted ssh?${reset}"
+echo "${yellow}What name of genereted ssh?${resetColor}"
 read ssh_name
 ssh-add "~/.ssh/$ssh_name"
 cat "~/.ssh/$ssh_name.pub" | xclip -selection clipboard
-echo "${yellow}ssh pub copied to clipboard${reset}"
+echo "${yellow}ssh pub copied to clipboard${resetColor}"
 
-echo "${yellow}Enabling workspaces for both screens${reset}"
+echo "${yellow}Enabling workspaces for both screens${resetColor}"
 gsettings set org.gnome.mutter workspaces-only-on-primary false
 
-echo "${yellow}Installing Visual Studio Code${reset}"
+echo "${yellow}Installing Visual Studio Code${resetColor}"
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
 sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
@@ -65,7 +65,7 @@ sudo apt-get install apt-transport-https -y
 sudo apt-get update
 sudo apt-get install code -y # or code-insiders
 
-echo "${yellow}Installing extensions${reset}"
+echo "${yellow}Installing extensions${resetColor}"
 code --install-extension dbaeumer.vscode-eslint
 code --install-extension christian-kohler.path-intellisense
 code --install-extension dbaeumer.vscode-eslint
@@ -77,12 +77,12 @@ code --install-extension waderyan.gitblame
 code --install-extension yzhang.markdown-all-in-one
 clear
 
-echo "${yellow}Installing chrome${reset}"
+echo "${yellow}Installing chrome${resetColor}"
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 clear
 
-echo "${yellow}Installing nvm${reset}"
+echo "${yellow}Installing nvm${resetColor}"
 sh -c "$(curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | zsh)"
 
 export NVM_DIR="$HOME/.nvm" && (
@@ -101,29 +101,29 @@ nvm install 13
 nvm alias default 13
 clear
 
-echo "${yellow}installing autosuggestions${reset}"
+echo "${yellow}installing autosuggestions${resetColor}"
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshr
 source ~/.zshrc
 clear
 
-echo "${yellow}installing theme${reset}"
+echo "${yellow}installing theme${resetColor}"
 sudo apt install fonts-firacode -y
 wget -O ~/.oh-my-zsh/themes/node.zsh-theme https://raw.githubusercontent.com/skuridin/oh-my-zsh-node-theme/master/node.zsh-theme 
 sed -i 's/.*ZSH_THEME=.*/ZSH_THEME="node"/g' ~/.zshrc
 clear
 
-echo "${yellow}installing slack${reset}"
+echo "${yellow}installing slack${resetColor}"
 wget https://downloads.slack-edge.com/linux_releases/slack-desktop-3.3.8-amd64.deb
 sudo apt install ./slack-desktop-*.deb -y
 clear
 
-echo "${yellow}installing terminator${reset}"
+echo "${yellow}installing terminator${resetColor}"
 sudo apt-get update
 sudo apt-get install terminator -y
 clear
 
-echo "${yellow}adding dracula theme${reset}"
+echo "${yellow}adding dracula theme${resetColor}"
 cat <<EOF >  ~/.config/terminator/config
 [global_config]chr
   title_transmit_bg_color = "#ad7fa8"
@@ -169,7 +169,7 @@ cat <<EOF >>  ~/.config/terminator/config
 EOF
 clear
 
-echo "${yellow}installing docker${reset}"
+echo "${yellow}installing docker${resetColor}"
 sudo apt-get remove docker docker-engine docker.io
 sudo apt install docker.io -y
 sudo systemctl start docker
@@ -180,33 +180,33 @@ chmod 777 /var/run/docker.sock
 docker run hello-world
 clear
 
-echo "${yellow}installing docker-compose${reset}"
+echo "${yellow}installing docker-compose${resetColor}"
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 clear
 
-echo "${yellow}installing dbeaver${reset}"
+echo "${yellow}installing dbeaver${resetColor}"
 wget -c https://dbeaver.io/files/6.0.0/dbeaver-ce_6.0.0_amd64.deb
 sudo dpkg -i dbeaver-ce_6.0.0_amd64.deb
 sudo apt-get install -f
 clear
 
-echo "${yellow}installing gnome twitch${reset}"
+echo "${yellow}installing gnome twitch${resetColor}"
 sudo add-apt-repository ppa:nilarimogard/webupd8
 sudo apt update && sudo apt install gnome-twitch
 clear
 
-echo "${yellow}installing discord${reset}"
+echo "${yellow}installing discord${resetColor}"
 wget -O ~/Downloads/discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
 sudo dpkg -i ~/Downloads/discord.deb
 clear
 
-echo "${yellow}installing htop${reset}"
+echo "${yellow}installing htop${resetColor}"
 sudo apt-get install htop
 clear
 
-echo "${yellow}installing insomnia${reset}"
+echo "${yellow}installing insomnia${resetColor}"
 echo "deb https://dl.bintray.com/getinsomnia/Insomnia /" \
     | sudo tee -a /etc/apt/sources.list.d/insomnia.list
 
@@ -217,9 +217,9 @@ sudo apt-get update
 sudo apt-get install insomnia
 clear
 
-echo "${yellow}installing MongoDB Compass${reset}"
+echo "${yellow}installing MongoDB Compass${resetColor}"
 wget -O ~/Downloads/compass.deb "https://downloads.mongodb.com/compass/mongodb-compass_1.21.2_amd64.deb"
 sudo dpkg -i ~/Downloads/compass.deb
 clear
 
-echo "${yellow}End of instalations${reset}"
+echo "${yellow}End of instalations${resetColor}"
