@@ -14,12 +14,12 @@ clear
 echo "${yellow}Installing zsh${resetColor}"
 sudo apt-get install zsh -y
 
-echo "${yellow}Installing Oh My Zsh${resetColor}"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-clear
-
 echo "${yellow}Installing git${resetColor}"
 sudo apt install git -y
+clear
+
+echo "${yellow}Installing Oh My Zsh${resetColor}"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 clear
 
 echo "${yellow}What name do you want to use in GIT user.name?${resetColor}"
@@ -45,13 +45,14 @@ sudo apt-get install xclip -y
 clear
 
 echo "${yellow}Generating a SSH Key${resetColor}"
+mkdir ~/.ssh
 (cd ~/.ssh && ssh-keygen -t rsa -b 4096 -C $git_config_user_email)
 clear
 
 echo "${yellow}What name of genereted ssh?${resetColor}"
 read ssh_name
-ssh-add "~/.ssh/$ssh_name"
-cat "~/.ssh/$ssh_name.pub" | xclip -selection clipboard
+ssh-add ~/.ssh/$ssh_name
+cat ~/.ssh/$ssh_name.pub | xclip -selection clipboard
 echo "${yellow}ssh pub copied to clipboard${resetColor}"
 
 echo "${yellow}Enabling workspaces for both screens${resetColor}"
@@ -83,7 +84,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 clear
 
 echo "${yellow}Installing nvm${resetColor}"
-sh -c "$(curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | zsh)"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm" && (
 git clone https://github.com/creationix/nvm.git "$NVM_DIR"
@@ -97,8 +98,8 @@ clear
 
 source ~/.zshrc
 nvm --version
-nvm install 13
-nvm alias default 13
+nvm install 20
+nvm alias default 20
 clear
 
 echo "${yellow}installing autosuggestions${resetColor}"
@@ -174,6 +175,9 @@ sudo apt-get remove docker docker-engine docker.io
 sudo apt install docker.io -y
 sudo systemctl start docker
 sudo systemctl enable docker
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
 docker --version
 
 chmod 777 /var/run/docker.sock
